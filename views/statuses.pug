@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    title= title
+    h2 Status Catalogs
+    ul
+        each status in statuses
+            li= status.name
+                form(action="/statuses/delete", method="POST" style="display: inline-block;")
+                    input(type="hidden", name="statusCatalogId", value=status._id)
+                    button(type="submit") Delete
+
+    h2 Add New Status
+    form(action="/statuses/add", method="POST")
+        label(for="name") Name:
+        input(type="text", name="name", required)
+        button(type="submit") Add Status

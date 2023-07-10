@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    title= title
+    h2 Created Menu Items
+    ul
+        each item in items
+            li
+                h3= item.name
+                p Category: #{item.category.categoryName}
+                p Price: #{item.price} zl
+                form(action="/menuitems/delete", method="POST" style="display: inline-block;")
+                    input(type="hidden", name="itemId", value= item._id)
+                    button(type="submit") Delete
+
+    h2 Add new menu item
+    form(action="/menuitems/add", method="POST")
+        label(for="name") Name:
+        input(type="text", name="name", required)
+        label(for="categoryId") Category:
+        select(name="categoryId" required)
+            option(value="" disabled selected) Select Category
+            each category in categories
+               option(value=category._id)= category.categoryName
+        label(for="price") Price:
+        input(type="number", name="price", step="0.01", required)
+        button(type="submit") Add Menu Item

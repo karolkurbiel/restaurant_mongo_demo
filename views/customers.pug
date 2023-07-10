@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    title= title
+    h2 Customers
+    ul
+        each customer in customers
+            li
+                h3= customer.name
+                p Address: #{customer.address}
+                p Email: #{customer.email}
+                form(action="/customers/delete", method="POST" style="display: inline-block;")
+                    input(type="hidden", name="customerId", value=customer._id)
+                    button(type="submit") Delete
+
+    h2 Add New Customer
+    form(action="/customers/add", method="POST")
+        label(for="name") Name:
+        input(type="text", name="name", required)
+        label(for="address") Address:
+        input(type="text", name="address", required)
+        label(for="email") Email:
+        input(type="email", name="email", required)
+        button(type="submit") Add Customer

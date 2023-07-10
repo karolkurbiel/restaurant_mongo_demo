@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    title= title
+    h2 Placed Orders
+    ul
+        each placedOrder in placedOrders
+            li
+                h3 Restaurant: #{placedOrder.restaurant.name}
+                h4 Customer: #{placedOrder.customer.name}
+                //h4 Order Items:
+                //ul
+                //    each orderItem in placedOrder.orderItems
+                //        each menuItem in orderItem.menuItems
+                //            li= menuItem.name
+                p Timestamp: #{placedOrder.timestamp}
+                p Order Status: #{placedOrder.orderStatus.name}
+                p Final Price: #{placedOrder.finalPrice}
+                p Delivery Address: #{placedOrder.deliveryAddress}
+                form(action=`/placedOrders/update/${placedOrder._id}`, method="POST" style="display: inline-block;")
+                    label(for="orderStatus") Update Order Status:
+                    select(name="orderStatus" required)
+                        each status in statuses
+                            option(value=status._id)= status.name
+                    button(type="submit") Update
+                form(action=`/placedOrders/delete/${placedOrder._id}`, method="POST" style="display: inline-block;")
+                    button(type="submit") Delete
+
+    h2 Create a New Placed Order
+    form(action="/placedOrders/create", method="POST")
+        label(for="restaurant") Restaurant:
+        select(name="restaurant" required)
+            each restaurant in restaurants
+                option(value=restaurant._id)= restaurant.name
+        label(for="customer") Customer:
+        select(name="customer" required)
+            each customer in customers
+                option(value=customer._id)= customer.name
+        label(for="orderItems") Order Items:
+        select(name="orderItems" multiple style="width: 300px;" required)
+            each orderItem in orderItems
+                option(value=orderItem._id)= `${orderItem.customer.name}; ${orderItem.timestamp}`
+        label(for="orderStatus") Order Status:
+        select(name="orderStatus" required)
+            each status in statuses
+                option(value=status._id)= status.name
+        button(type="submit") Create

@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+    h1 Navigation
+      select(onchange="window.location.href=this.value")
+        option(value="" disabled selected) Select
+        option(value="../") Home
+        option(value="../categories") Categories
+        option(value="../menuitems") Menu Items
+        option(value="../customers") Customers
+        option(value="../restaurants") Restaurants
+        option(value="../statuses") Order Statuses
+        option(value="../orderitems") Order Items
+        option(value="../placedorders") Placed Orders
+  body
+    block content

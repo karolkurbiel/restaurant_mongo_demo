@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    title= title
+    h2 Order Items
+    ul
+        each orderItem in orderItems
+            li
+                h3 Customer: #{orderItem.customer.name}
+                h4 Timestamp: #{orderItem.timestamp}
+                h4 Menu Items:
+                ul
+                    each menuItem in orderItem.menuItems
+                        li= menuItem.name
+                form(action=`/orderitems/delete/${orderItem._id}`, method="POST" style="display: inline-block;")
+                    button(type="submit") Delete
+
+    h2 Create a New Order Items
+        form(action="/orderitems/create", method="POST")
+            label(for="customer") Customer:
+                select(name="customer" required)
+                    each customer in customers
+                        option(value=customer._id)= customer.name
+            label(for="menuItems") Menu Items:
+            select(name="menuItems" multiple required)
+                each category in categories
+                    optgroup(label=category.categoryName)
+                        each menuItem in menuItems
+                            if menuItem.category._id.equals(category._id)
+                                option(value=menuItem._id)= menuItem.name
+            button(type="submit") Create
